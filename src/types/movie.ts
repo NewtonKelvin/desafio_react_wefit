@@ -1,20 +1,19 @@
 export type ProductsType = {
-  products: MoviesType[] | [];
+  products: MovieType[];
 };
 
-export type MoviesType = {
+export type MovieType = {
   id: number;
   title: string;
   price: number;
   image: string;
 };
 
-export type CartActions = {
+export type MovieAction = {
   type: MovieActions;
   payload: ProductsType;
 };
 
 export enum MovieActions {
-  LIST_PRODUCTS = "LIST_PRODUCTS",
-  REMOVE_PRODUCT = "REMOVE_PRODUCT",
+  SET_PRODUCTS = "SET_PRODUCTS",
 }
