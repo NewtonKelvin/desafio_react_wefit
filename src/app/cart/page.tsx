@@ -8,7 +8,12 @@ import styled from "styled-components";
 import Empty from "../../../public/empty.svg";
 import { RootState } from "../store";
 
-import { addMovie, clearCart, removeMovie } from "@/redux/cartSlice";
+import {
+  addMovie,
+  clearCart,
+  removeAllMovies,
+  removeMovie,
+} from "@/redux/cartSlice";
 import { MovieType } from "@/types/movie";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
@@ -180,7 +185,6 @@ export default function Cart() {
                           price: 0,
                           title: "",
                         };
-                        console.log(typeof selected);
                         return <ListItem key={movie.id} movie={selected} />;
                       })}
                   </TableBody>
@@ -218,6 +222,10 @@ function ListItem({ movie }: { movie: MovieType }) {
     dispatch(removeMovie({ id: movie.id, price: movie.price }));
   };
 
+  const deleteMovie = () => {
+    dispatch(removeAllMovies(movie));
+  };
+
   return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       <TableCell component="th" scope="row">
@@ -238,7 +246,7 @@ function ListItem({ movie }: { movie: MovieType }) {
         {ConvertToBrl(movie.price * (itemOnCart?.quantity || 1))}
       </TableCell>
       <TableCell align="right" className="deleteIcon">
-        <DeleteIcon fontSize="medium" />
+        <DeleteIcon onClick={() => deleteMovie()} fontSize="medium" />
       </TableCell>
     </TableRow>
   );

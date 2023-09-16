@@ -12,6 +12,18 @@ export const cartStore = createSlice({
   name: "cartStore",
   initialState,
   reducers: {
+    removeAllMovies: (state, action: PayloadAction<MovieType>) => {
+      const removedQt =
+        state.products.find((item) => item.id === action.payload.id)
+          ?.quantity || 1;
+      const removedValue = action.payload.price * removedQt;
+
+      state.products = state.products.filter(
+        (item) => item.id !== action.payload.id
+      );
+      state.quantity = state.quantity - removedQt;
+      state.total = Math.round((state.total - removedValue) * 100) / 100;
+    },
     addMovie: (state, action: PayloadAction<MovieType>) => {
       let itemIsOnList: boolean = state.products.some(
         (item) => item.id === action.payload.id
@@ -56,7 +68,6 @@ export const cartStore = createSlice({
           item.quantity--;
         }
       });
-      console.log(newProducts);
 
       state.quantity--;
       state.total =
@@ -68,5 +79,6 @@ export const cartStore = createSlice({
   },
 });
 
-export const { addMovie, removeMovie, clearCart } = cartStore.actions;
+export const { addMovie, removeMovie, clearCart, removeAllMovies } =
+  cartStore.actions;
 export default cartStore.reducer;

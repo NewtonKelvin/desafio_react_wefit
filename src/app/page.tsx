@@ -13,20 +13,23 @@ export default function Home() {
   const movies = useAppSelector((state) => state.movies);
   const dispatch = useAppDispatch();
 
-  async function GetAllMovies() {
-    await api
-      .get("/products")
-      .then((response) => {
-        const products: ProductsType = response.data;
-        dispatch(setProducts(products));
-      })
-      .catch((err: AxiosError<ProductsType>) => {
-        console.error(err);
-      });
-  }
-
   useEffect(() => {
-    GetAllMovies();
+    const abortController = new AbortController();
+    const fetchData = async () => {
+      await api
+        .get("/products")
+        .then((response) => {
+          const products: ProductsType = response.data;
+          dispatch(setProducts(products));
+        })
+        .catch((err: AxiosError<ProductsType>) => {
+          if (!abortController.signal.aborted) {
+            console.error(err.message);
+          }
+        });
+    };
+    fetchData();
+    return () => abortController.abort();
   }, []);
 
   return (

@@ -109,7 +109,7 @@ export default function Movies({ movie }: Props) {
   const { id, image, price, title } = movie;
 
   const { products } = useAppSelector((state) => state.cart);
-  const itemOnCart = products.find((item) => item.id === movie.id);
+  const itemOnCart = products.find((item) => item?.id === movie.id);
 
   const dispatch = useAppDispatch();
   const [added, setAdded] = useState(false);
