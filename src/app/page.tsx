@@ -7,6 +7,7 @@ import { AxiosError } from "axios";
 import { useEffect } from "react";
 
 import { setProducts } from "@/redux/moviesSlice";
+import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "./hooks";
 
 export default function Home() {
@@ -32,15 +33,28 @@ export default function Home() {
     return () => abortController.abort();
   }, []);
 
+  const CustomBox = styled(Box)`
+    .table {
+      flex-direction: row;
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
+      .MuiGrid-item {
+        max-width: 100%;
+        margin: 0 16px;
+      }
+    }
+  `;
+
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
+      <CustomBox sx={{ flexGrow: 1 }}>
+        <Grid container spacing={2} className="table">
           {movies.products.map((movie, index) => (
             <Movies key={index} movie={movie} />
           ))}
         </Grid>
-      </Box>
+      </CustomBox>
     </>
   );
 }

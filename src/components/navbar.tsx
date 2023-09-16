@@ -13,6 +13,11 @@ const MyNavbar = styled.div`
   padding: 18px 10px;
   justify-content: space-between;
   margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    height: 68px;
+    margin-bottom: 0px;
+  }
   & > span {
     font-size: 25px;
     font-weight: 700;
@@ -39,6 +44,10 @@ const MyNavbar = styled.div`
   }
   .text {
     font-size: 14px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
   .value {
     color: #999;
@@ -63,7 +72,7 @@ export default function Navbar() {
         <div className="carrinho">
           <div className="information">
             <span className="text">Meu Carrinho</span>
-            <span className="value">{itemsOnCart} itens</span>
+            <span className="value">{itemsOnCart} item</span>
           </div>
           <ShoppingBasketIcon />
         </div>

@@ -6,10 +6,14 @@ import LoadingVector from "../../public/loading.svg";
 const MyLayout = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - 74px);
   align-items: center;
   justify-content: center;
   flex-grow: 1;
+  height: calc(100dvh - 74px);
+
+  @media (max-width: 768px) {
+    height: calc(100dvh - 68px);
+  }
 `;
 
 export default function Loading() {

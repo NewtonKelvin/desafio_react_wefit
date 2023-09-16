@@ -7,7 +7,11 @@ import { Box, Grid } from "@mui/material";
 import CheckOut from "../../../public/checkout.svg";
 
 const Container = styled.div`
+  @media (max-width: 768px) {
+    margin: 0 16px;
+  }
   .container {
+    width: 100%;
     margin: 0;
     padding: 24px;
     border-radius: 4px;
@@ -15,7 +19,12 @@ const Container = styled.div`
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 21px;
+    @media (max-width: 768px) {
+      height: auto;
+      padding: 16px;
+    }
   }
 `;
 

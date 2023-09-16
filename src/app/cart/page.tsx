@@ -27,11 +27,15 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch } from "../hooks";
 
 const Container = styled.div`
+  @media (max-width: 768px) {
+    margin: 0 16px;
+  }
   hr {
     border: 0;
     border-top: 1px solid #999;
   }
   .container {
+    width: 100%;
     margin: 0;
     padding: 24px;
     border-radius: 4px;
@@ -39,10 +43,21 @@ const Container = styled.div`
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 21px;
+
+    @media (max-width: 768px) {
+      height: auto;
+      padding: 16px;
+    }
   }
   table td {
     padding: 0;
+  }
+  table thead {
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
   & > table > tbody {
     margin-top: 21px;
@@ -57,6 +72,17 @@ const Container = styled.div`
     border: 0;
     padding: 0;
   }
+  table tr > td {
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      margin: 5px 0;
+    }
+  }
+  hr {
+    width: 100%;
+  }
   .breakline {
     display: flex;
     flex-direction: column;
@@ -67,6 +93,15 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    @media (max-width: 768px) {
+      flex-direction: column-reverse;
+      align-items: end;
+      gap: 16px;
+      button {
+        width: 100% !important;
+      }
+    }
     & > button {
       text-transform: uppercase;
       color: #fff;
@@ -114,10 +149,18 @@ const Container = styled.div`
     color: #2f2e41;
     font-size: 16px;
     font-weight: 700;
+
+    @media (max-width: 768px) {
+      flex-wrap: nowrap;
+    }
   }
   .deleteIcon {
     & > svg {
       color: #009edd;
+    }
+
+    @media (max-width: 768px) {
+      flex-wrap: nowrap;
     }
   }
   .movieQuantity {
@@ -137,6 +180,20 @@ const Container = styled.div`
       justify-content: center;
       align-items: flex-start;
     }
+  }
+  .tableInfo {
+    @media (max-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  .label {
+    color: #999;
+    font-family: Open Sans;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
 `;
 
@@ -162,8 +219,8 @@ export default function Cart() {
             <EmptyCart />
           ) : (
             <>
-              <TableContainer>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableContainer sx={{ flexGrow: 1 }}>
+                <Table aria-label="simple table">
                   <TableHead>
                     <TableRow>
                       <TableCell>Produto</TableCell>
@@ -228,24 +285,25 @@ function ListItem({ movie }: { movie: MovieType }) {
 
   return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-      <TableCell component="th" scope="row">
+      <TableCell component="th" scope="row" className="tableImage">
         <Image src={movie.image} width={89} height={114} alt="movie cover" />
       </TableCell>
-      <TableCell align="left">
+      <TableCell align="left" className="tableInfo">
         <p className="movieTitle">{movie.title}</p>
         <p className="moviePrice">{ConvertToBrl(movie.price)}</p>
       </TableCell>
-      <TableCell align="left">
+      <TableCell align="left" className="tableQuantity">
         <div className="movieQuantity">
           <RemoveCircleOutlineIcon onClick={() => removeFromCart()} />
           <span>{itemOnCart?.quantity}</span>
           <AddCircleOutlineIcon onClick={() => sumFromCart()} />
         </div>
       </TableCell>
-      <TableCell align="left" className="moviePrice">
+      <TableCell align="left" className="moviePrice tablePrice">
+        <label className="label">SUBTOTAL</label>
         {ConvertToBrl(movie.price * (itemOnCart?.quantity || 1))}
       </TableCell>
-      <TableCell align="right" className="deleteIcon">
+      <TableCell align="right" className="deleteIcon tableDelete">
         <DeleteIcon onClick={() => deleteMovie()} fontSize="medium" />
       </TableCell>
     </TableRow>
@@ -258,9 +316,14 @@ const EmptyContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-transform: none;
 
   padding: 64px;
   gap: 32px;
+
+  @media (max-width: 768px) {
+    padding: 32px;
+  }
 
   & > h1 {
     color: #2f2e41;

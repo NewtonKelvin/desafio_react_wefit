@@ -7,6 +7,7 @@ const MyLayout = styled.div`
   flex-direction: column;
   height: 100dvh;
   .container {
+    height: 100%;
     max-width: 960px;
     padding: 0;
   }
