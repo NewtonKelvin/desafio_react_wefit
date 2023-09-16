@@ -1,39 +1,29 @@
 "use client";
 import Movies from "@/components/movies";
 import { api } from "@/services/api";
-import { MovieAction, MovieActions, ProductsType } from "@/types/movie";
+import { ProductsType } from "@/types/movie";
 import { Box, Grid } from "@mui/material";
 import { AxiosError } from "axios";
-import { useEffect, useReducer } from "react";
+import { useEffect } from "react";
 
-function moviesReducer(state: ProductsType, action: MovieAction) {
-  switch (action.type) {
-    case MovieActions.SET_PRODUCTS:
-      return action.payload;
-      break;
-    default:
-      return state;
-      break;
-  }
-}
+import { setProducts } from "@/redux/moviesSlice";
+import { useAppDispatch, useAppSelector } from "./hooks";
 
 export default function Home() {
-  const [state, dispatch] = useReducer(moviesReducer, { products: [] });
+  const movies = useAppSelector((state) => state.movies);
+  const dispatch = useAppDispatch();
 
-  const GetAllMovies = async () => {
+  async function GetAllMovies() {
     await api
       .get("/products")
       .then((response) => {
         const products: ProductsType = response.data;
-        dispatch({
-          type: MovieActions.SET_PRODUCTS,
-          payload: products,
-        });
+        dispatch(setProducts(products));
       })
       .catch((err: AxiosError<ProductsType>) => {
         console.error(err);
       });
-  };
+  }
 
   useEffect(() => {
     GetAllMovies();
@@ -43,7 +33,7 @@ export default function Home() {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
-          {state.products.map((movie, index) => (
+          {movies.products.map((movie, index) => (
             <Movies key={index} movie={movie} />
           ))}
         </Grid>

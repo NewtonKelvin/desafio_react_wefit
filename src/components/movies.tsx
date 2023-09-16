@@ -1,5 +1,5 @@
-import { useCart } from "@/context/cartContext";
-import { CartActions } from "@/types/cart";
+import { useAppDispatch } from "@/app/hooks";
+import { addMovie } from "@/redux/cartSlice";
 import { MovieType } from "@/types/movie";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Grid } from "@mui/material";
@@ -96,11 +96,12 @@ type Props = Readonly<{
 
 export default function Movies({ movie }: Props) {
   const { id, image, price, title } = movie;
-  const { dispatch, state } = useCart();
+  const dispatch = useAppDispatch();
 
   const AddToCart = (movie: MovieType) => {
-    dispatch({ type: CartActions.ADD_MOVIE, payload: movie });
+    dispatch(addMovie(movie));
   };
+
   return (
     <Grid item xs={2} sm={4} md={4}>
       <MyMovie>

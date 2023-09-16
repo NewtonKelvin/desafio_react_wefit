@@ -1,6 +1,7 @@
 "use client";
-import { useCart } from "@/context/cartContext";
+import { RootState } from "@/app/store";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const MyNavbar = styled.div`
@@ -45,14 +46,15 @@ const MyNavbar = styled.div`
 `;
 
 export default function Navbar() {
-  let { state } = useCart();
+  const { products } = useSelector((state: RootState) => state.cart);
+
   return (
     <MyNavbar>
       <span className="brand">WeMovies</span>
       <div className="carrinho">
         <div className="information">
           <span className="text">Meu Carrinho</span>
-          <span className="value">{state.quantity} itens</span>
+          <span className="value">{products.length} itens</span>
         </div>
         <ShoppingBasketIcon />
       </div>
