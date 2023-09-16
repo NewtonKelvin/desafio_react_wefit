@@ -188,6 +188,12 @@ const Container = styled.div`
     }
   }
   .label {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+
     color: #999;
     font-family: Open Sans;
     font-size: 12px;

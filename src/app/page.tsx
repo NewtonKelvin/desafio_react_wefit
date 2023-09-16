@@ -38,10 +38,10 @@ export default function Home() {
       flex-direction: row;
       @media (max-width: 768px) {
         flex-direction: column;
-      }
-      .MuiGrid-item {
-        max-width: 100%;
-        margin: 0 16px;
+        .MuiGrid-item {
+          max-width: 100%;
+          margin: 0 16px;
+        }
       }
     }
   `;
