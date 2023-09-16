@@ -1,10 +1,12 @@
-import { useAppDispatch } from "@/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { addMovie } from "@/redux/cartSlice";
 import { MovieType } from "@/types/movie";
+import ConvertToBrl from "@/utils/convertToBRL";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Grid } from "@mui/material";
 import "dotenv/config";
 import Image from "next/image";
+import { useState } from "react";
 import styled from "styled-components";
 
 const MyMovie = styled.div`
@@ -60,8 +62,13 @@ const MyMovie = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    align-self: stretch;
     gap: 12px;
     cursor: pointer;
+  }
+
+  .button > button.active {
+    background: #039b00;
   }
 
   .buttonInfo {
@@ -83,6 +90,10 @@ const MyMovie = styled.div`
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
+    text-align: center;
+    justify-content: center;
+    width: 157px;
+    height: 18px;
   }
   .buttonQuantity {
     font-size: 12px;
@@ -96,10 +107,16 @@ type Props = Readonly<{
 
 export default function Movies({ movie }: Props) {
   const { id, image, price, title } = movie;
-  const dispatch = useAppDispatch();
 
-  const AddToCart = (movie: MovieType) => {
+  const { products } = useAppSelector((state) => state.cart);
+  const itemOnCart = products.find((item) => item.id === movie.id);
+
+  const dispatch = useAppDispatch();
+  const [added, setAdded] = useState(false);
+
+  const AddToCart = () => {
     dispatch(addMovie(movie));
+    setAdded(true);
   };
 
   return (
@@ -114,20 +131,23 @@ export default function Movies({ movie }: Props) {
               alt={`Capa do filme ${title}`}
             />
             <span className="movieTitle">{title}</span>
-            <span className="moviePrice">
-              {price.toLocaleString("pt-br", {
-                style: "currency",
-                currency: "BRL",
-              })}
-            </span>
+            <span className="moviePrice">{ConvertToBrl(price)}</span>
           </div>
           <div className="button">
-            <button type="button" onClick={() => AddToCart(movie)}>
+            <button
+              className={`${added && "active"}`}
+              type="button"
+              onClick={() => AddToCart()}
+            >
               <span className="buttonInfo">
                 <AddShoppingCartIcon />
-                <span className="buttonQuantity">0</span>
+                <span className="buttonQuantity">
+                  {itemOnCart?.quantity || 0}
+                </span>
               </span>
-              <span className="buttonText">Adicionar ao carrinho</span>
+              <span className="buttonText">
+                {!added ? "Adicionar ao carrinho" : "Item adicionado"}
+              </span>
             </button>
           </div>
         </div>

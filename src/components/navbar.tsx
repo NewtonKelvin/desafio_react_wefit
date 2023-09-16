@@ -1,6 +1,7 @@
 "use client";
 import { RootState } from "@/app/store";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import Link from "next/link";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -43,21 +44,30 @@ const MyNavbar = styled.div`
     color: #999;
     font-size: 12px;
   }
+  .link {
+    cursor: pointer;
+  }
 `;
 
 export default function Navbar() {
-  const { products } = useSelector((state: RootState) => state.cart);
+  const { quantity: itemsOnCart } = useSelector(
+    (state: RootState) => state.cart
+  );
 
   return (
     <MyNavbar>
-      <span className="brand">WeMovies</span>
-      <div className="carrinho">
-        <div className="information">
-          <span className="text">Meu Carrinho</span>
-          <span className="value">{products.length} itens</span>
+      <span className="brand link">
+        <Link href={"/"}>WeMovies</Link>
+      </span>
+      <Link href={"/cart"} className="link">
+        <div className="carrinho">
+          <div className="information">
+            <span className="text">Meu Carrinho</span>
+            <span className="value">{itemsOnCart} itens</span>
+          </div>
+          <ShoppingBasketIcon />
         </div>
-        <ShoppingBasketIcon />
-      </div>
+      </Link>
     </MyNavbar>
   );
 }

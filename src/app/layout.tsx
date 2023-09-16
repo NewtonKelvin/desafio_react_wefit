@@ -4,9 +4,9 @@ import StyledComponentsRegistry from "../lib/registry";
 import "../styles/globals.css";
 
 import Loading from "@/components/loading";
+import CartProvider from "@/providers/storeProvider";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import StoreProvider from "../providers/storeProvider";
 
 const Navbar = dynamic(() => import("@/components/navbar"), { ssr: false });
 const Container = dynamic(() => import("@/components/layout"), { ssr: false });
@@ -27,14 +27,14 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={openSans.className}>
         <StyledComponentsRegistry>
-          <StoreProvider>
+          <CartProvider>
             <Container>
               <Navbar />
               <div className="content">
                 <Suspense fallback={<Loading />}>{children}</Suspense>
               </div>
             </Container>
-          </StoreProvider>
+          </CartProvider>
         </StyledComponentsRegistry>
       </body>
     </html>

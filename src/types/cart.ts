@@ -1,8 +1,13 @@
 import { MovieType } from "./movie";
 
 export type CartState = {
-  products: MovieType[];
+  products: ItemType[];
   total: number;
+  quantity: number;
+};
+
+export type ItemType = {
+  id: number;
   quantity: number;
 };
 
