@@ -1,34 +1,43 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Como testar
 
-First, run the development server:
+Primeiro, baixe as dependências:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+Depois, rode o projeto:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Servidor
 
-## Learn More
+O servidor com o `json` dos filmes será iniciado junto do projeto
 
-To learn more about Next.js, take a look at the following resources:
+Pra fazer uma requisição utilize a rota [http://localhost:3000/api/products](http://localhost:3000/api/products)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Pacotes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Pacotes utilizados:
 
-## Deploy on Vercel
+1. Redux toolkit: Para um ótimo controle dos estados que serão compartilhados na aplicação
+2. Styled components: Para estilização de componentes
+3. Material UI: Uma biblioteca de componentes que agilizam o processo de desenvolvimente e também disponibiliza uma imensa variedade de ícones
+4. Typescript: Para tipar o código melhorar o desenvolvimento e manutenção do projeto
+5. Next: Biblioteca para desenvolvimente fullstack e tambem de alta performance que abre um grande leque de recursos para o desenvolvimento de sites
+6. Eslint: Padronização, formatação e identação de código
+7. Dotenv: Manipulação de variáveis de ambiente
+8. Axios: Requisições de endpoints
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Email: kelvinnewtonsm@gmail.com
